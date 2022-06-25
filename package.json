@@ -1,0 +1,15 @@
+{
+  "name": "bluechip-invest-thegraph",
+  "scripts": {
+    "build": "graph build",
+    "config": "mustache ./config.json subgraph.template.yaml subgraph.yaml",
+    "codegen": "graph codegen --output-dir ./src/types/",
+    "clean": "rm -rf ./build/ ./src/types/ ./subgraph.yaml ./.env",
+    "deploy": "graph deploy --deploy-key 1f07de13762e772a4c4189110fea5979 -l v1.0.1-investment --studio bluechip-invest"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.21.1",
+    "@graphprotocol/graph-ts": "^0.20.1",
+    "mustache": "^4.2.0"
+  }
+}

@@ -1,0 +1,64 @@
+type Currency @entity {
+  id: ID!
+  name: String
+  symbol: String
+  decimals: Int!
+}
+
+type Collection @entity {
+  id: ID!
+  name: String
+  symbol: String
+}
+
+type Nft @entity {
+  id: ID!
+  collection: Collection!
+  tokenId: BigInt!
+  tokenURI: String
+}
+
+type Listing @entity {
+  id: ID!
+  timestamp: BigInt!
+  creator: Bytes!
+  seller: Bytes!
+  target: Nft!
+  listed: Boolean!
+  paymentToken: Currency!
+  reservePrice: BigDecimal!
+  fee: BigDecimal!
+  creatorFee: BigDecimal!
+  priceMultiplier: BigDecimal!
+  extra: Bytes!
+
+  status: String!
+  amount: BigDecimal!
+  fractions: Bytes
+  fractionsCount: BigDecimal
+
+  sellerNetAmount: BigDecimal!
+  sellerFeeAmount: BigDecimal!
+  creatorFeeAmount: BigDecimal!
+
+  buyersCount: Int!
+  buyers: [UserListing!]! @derivedFrom(field: "listing")
+
+  _ref: String!
+}
+
+type UserListing @entity {
+  id: ID!
+  buyer: Bytes!
+  listed: Boolean!
+  listing: Listing!
+
+  ownership: BigDecimal!
+  amount: BigDecimal!
+  fractionsCount: BigDecimal
+}
+
+type Counter @entity {
+  id: ID!
+  value: BigInt!
+}

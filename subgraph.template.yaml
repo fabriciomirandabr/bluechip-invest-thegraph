@@ -1,0 +1,45 @@
+specVersion: 0.0.2
+description: A decentralized protocol for NFT fractionalization.
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Investment
+    network: '{{ network }}'
+    source:
+      abi: Investment
+      address: '{{contract}}'
+      startBlock: 10916232
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/investment.ts
+      entities:
+        - Collection
+        - Currency
+        - Listing
+        - Nft
+        - UserListing
+      abis:
+        - name: Investment
+          file: ./abis/Investment.json
+        - name: ERC721
+          file: ./abis/ERC721.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Listed(indexed uint256,indexed address)
+          handler: handleListed
+        - event: Acquired(indexed uint256)
+          handler: handleAcquired
+        - event: Relisted(indexed uint256)
+          handler: handleRelisted
+        - event: Join(indexed uint256,indexed address,uint256)
+          handler: handleJoin
+        - event: Leave(indexed uint256,indexed address,uint256)
+          handler: handleLeave
+        - event: Payout(indexed uint256,indexed address,uint256,uint256,uint256)
+          handler: handlePayout
+        - event: Claim(indexed uint256,indexed address,uint256,uint256)
+          handler: handleClaim
